@@ -3,6 +3,8 @@
   <%= @artist.name %>
 </h2>
 
+<%= link_to 'Back', root_path %>
+
 <!-- display all the albums the artist owned -->
 <h3>Discography</h3>
 <ul>
@@ -21,7 +23,3 @@
   </li>
   <% end %>
 </ul>
-
-
-
-<%= link_to 'Back', artists_path %>
