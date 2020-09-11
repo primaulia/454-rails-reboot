@@ -69,7 +69,34 @@ def seed_albums
   puts "DONE CREATING albums"
 end
 
+def seed_tracks
+  endpoint = "#{BASE_URL}/tracks?#{API_KEY}"
+
+  offset = ""
+  while offset
+    url = offset == "" ? endpoint : "#{endpoint}&offset=#{offset}"
+    json = JSON.parse(open(url).read)
+    json["records"].each do |data|
+      album = Album.find(data["fields"]["album_id"])
+      genre = Genre.find(data["fields"]["genre_id"])
+
+      Track.create!(
+        name: data["fields"]["name"],
+        composer: data["fields"]["composer"],
+        milliseconds: data["fields"]["milliseconds"],
+        bytes: data["fields"]["bytes"],
+        unit_price: data["fields"]["unit_price"],
+        album: album,
+        genre: genre
+      )
+    end
+    offset = json["offset"]
+  end
+  puts "DONE CREATING tracks"
+end
+
 seed_artists
 seed_genres
 seed_albums
+seed_tracks
 
