@@ -42,7 +42,7 @@ def seed_genres
   puts "DONE CREATING genres"
 end
 
-def seed_album
+def seed_albums
   # TODO. seed album from the api
 end
 
