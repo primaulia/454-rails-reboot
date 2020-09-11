@@ -1,13 +1,27 @@
 <!-- display the artist details -->
-<%= @artist.name %>
+<h2>
+  <%= @artist.name %>
+</h2>
 
 <!-- display all the albums the artist owned -->
+<h3>Discography</h3>
 <ul>
   <% @artist.albums.each do |album| %>
   <li>
-    <%= album.title %>
+    <%= link_to album.title, album_path(album) %>
   </li>
   <% end %>
 </ul>
+
+<h3>Tracks</h3>
+<ul>
+  <% @artist.tracks.each do |track| %>
+  <li>
+    <%= track.name %>
+  </li>
+  <% end %>
+</ul>
+
+
 
 <%= link_to 'Back', artists_path %>
