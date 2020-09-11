@@ -8,14 +8,16 @@ Genre.destroy_all
 
 puts "START SEED"
 
+BASE_URL = "https://api.airtable.com/v0/appOnpFap3mruBMNc"
+API_KEY = "api_key=key5wiIECTI6NOYbO"
 
-def seed_artists
-  api_key = "api_key=key5wiIECTI6NOYbO"
-  base_url = "https://api.airtable.com/v0/appOnpFap3mruBMNc/artists?#{api_key}"
+
+def seed_artists  
+  endpoint = "#{BASE_URL}/artists?#{API_KEY}"
   
   offset = ""
   while offset
-    url = offset == "" ? base_url : "#{base_url}&offset=#{offset}"
+    url = offset == "" ? endpoint : "#{endpoint}&offset=#{offset}"
     json = JSON.parse(open(url).read)
     json["records"].each do |data|
       Artist.create!(name: data["fields"]["name"])
@@ -25,13 +27,12 @@ def seed_artists
   puts "DONE CREATING artists"
 end
 
-def seed_genres
-  api_key = "api_key=key5wiIECTI6NOYbO"
-  base_url = "https://api.airtable.com/v0/appOnpFap3mruBMNc/genres?#{api_key}"
+def seed_genres  
+  endpoint = "#{BASE_URL}/genres?#{API_KEY}"
   
   offset = ""
   while offset
-    url = offset == "" ? base_url : "#{base_url}&offset=#{offset}"
+    url = offset == "" ? endpoint : "#{endpoint}&offset=#{offset}"
     json = JSON.parse(open(url).read)
     json["records"].each do |data|
       Genre.create!(name: data["fields"]["name"])
@@ -42,7 +43,7 @@ def seed_genres
 end
 
 def seed_album
-  # TODO
+  # TODO. seed album from the api
 end
 
 seed_artists
